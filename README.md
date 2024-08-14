@@ -1,70 +1,232 @@
-# Getting Started with Create React App
+<!-- import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { closeMenu } from "../utils/appSlice";
+import { useSearchParams } from "react-router-dom";
+import like from "../assets/singleVideo/like.svg"
+import dislike from "../assets/singleVideo/dislike.svg"
+// import axios from "axios";
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+const WatchPage = () => {
+  const [searchParams] = useSearchParams();
+  // console.log(searchParams.get("v"));
+  const [singleVideo, setSingleVideo] = useState([]);
+  // const [ icon, setIcon ] = useState([]);
+  const [channelLogo, setChannelLogo] = useState([]);
 
-## Available Scripts
+  const getSingleVideo = async () => {
+    // try{
+      // const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${searchParams.get("v")}&key=AIzaSyD7Q-LaB3oaKBQg_wB9X12EQXL_NJd6H6A`);
+      const res = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${searchParams.get("v")}&key=AIzaSyD7Q-LaB3oaKBQg_wB9X12EQXL_NJd6H6A`);
+      const resData = await res.json();
+      // console.log(resData);
+      // console.log(resData?.items[0]);
+      setSingleVideo(resData.items[0]);
+      // setIcon(resData.items[0].snippet.channelId);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
+  useEffect(() => {
+    getSingleVideo();
+  }, []);
 
-In the project directory, you can run:
+  console.log(singleVideo);
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  const getChannelLogo = async () => {
+    // const logoOne = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${searchParams.get("v")}&key=AIzaSyD7Q-LaB3oaKBQg_wB9X12EQXL_NJd6H6A`);
+    // const channelOne = await logoOne.json();
+    // console.log(channelOne.items[0].snippet.channelId);
+    // setIcon(channelOne.items[0].snippet.channelId);
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+    const logo = await fetch(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${singleVideo.snippet.channelId}&key=AIzaSyD7Q-LaB3oaKBQg_wB9X12EQXL_NJd6H6A`)
+    const channel = await logo.json();
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    // console.log(channel?.items[0]?.snippet?.thumbnails?.default?.url);
+    setChannelLogo(channel.items[0].snippet.thumbnails.default);
+  }
 
-### `npm run build`
+  useEffect(() => {
+    getChannelLogo();
+  }, []);
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  // console.log(icon);
+  console.log(channelLogo);
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(closeMenu());
+  }, [dispatch]);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+  return (
+    <div className="text-white col-span-12 flex items-center bg-black">
+      <div className="col-span-6 pl-24">
+        <iframe
+          className="rounded-xl"
+          width="640"
+          height="360"
+          src={"https://www.youtube.com/embed/" + searchParams.get("v") }
+          // + ?autoplay=1
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+        <div className="w-[630px]">
+          <div className="p-2   border-2 border-white text-white font-bold text-xl line-clamp-2">
+            {singleVideo?.snippet?.localized?.title}
+          </div>
+          <div className="flex justify-around py-4 border-2 border-white">
+            <div className=" flex border-2 border-white">
+              <img className="h-9 w-9 rounded-full" src={channelLogo.url}></img>
+                <div>
+                  <p className="font-bold border-2 border-white">{singleVideo?.snippet?.channelTitle}</p>
+                  <p> </p>
+                </div>
+            </div>
+            <button className="rounded-3xl bg-white text-black px-4 py-2 text-sm font-semibold hover:bg-opacity-80">Subscribe</button>
+            <div className="flex border-2 border-white">
+              <button className="py-2 flex  rounded-l-3xl bg-[#252727] font-semibold text-sm"><img className="w-[22px] ml-4 mr-2" src={like}></img> {singleVideo?.statistics?.likeCount}</button>
+              <button className="py-2 rounded-r-3xl bg-[#252727] font-semibold text-sm"><img className="w-[22px] mx-4" src={dislike}></img></button>
+            </div>
+            <button className="py-2 px-6 rounded-3xl bg-[#252727] font-semibold text-sm">Share</button>
+          </div>
+          <div className="w-[630px] px-4 py-3 rounded-2xl bg-[#252727] border-2 border-white">
+            <p className="line-clamp-4">{singleVideo?.snippet?.localized?.description}</p>
+          </div>
+          </div>
+      </div>
+      <div className="col-span-6">
+      {/* <iframe
+          className="rounded-xl"
+          width="640"
+          height="360"
+          src={"https://www.youtube.com/embed/" + searchParams.get("v")}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe> */}
+      </div>
+    </div>
+  );
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default WatchPage; -->
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# basic structure of our youtube
 
-## Learn More
+- Head
+- Body
+  - Sidebar
+    - MenuItems
+  - MainContainer
+    - ButtonList
+    - VideoContainer
+      - VideoCard
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# How debounsing work
+  - Head.js
 
-### Code Splitting
+  const [searchQuery, setSearchQuery] = useState("");
+  //   console.log(searchQuery);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  useEffect(() => {
+    // API call
+    // console.log(searchQuery);
 
-### Analyzing the Bundle Size
+    // make an API call after ever key press
+    // but if the difference between 2 API calls is < 200ms
+    // decline the API call
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    //   searchQuery pass in [] means when this searchQuery data will change than every time the API call
 
-### Making a Progressive Web App
+    const timer = setTimeout(() => {
+      getSearchSuggestion();
+    }, 200);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
 
-### Advanced Configuration
+  /**
+   * steps
+   * 
+   * key - i
+   * - render the component
+   * - useEffect();
+   * - start timer => make api call atfer 200 ms
+   *
+   * key - ip
+   * - destroy the component (useEffect return method)
+   * - re-render the component
+   * - useEffect();
+   * - start timer => make api call after 200ms (this is new timer)
+   * 
+   * #"if the 200ms passed and no changes apply in search button then below steps do"
+   * setTimeout(200) - make an API call
+   */
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  const getSearchSuggestion = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const json = await data.json();
+    console.log(json[1]);
+  };
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+# Cache:
+  time complexity to search in array = O(n)
+  time complexity to search in Object = O(1)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  O(1) is far far better than O(n)
+
+  array.indexOf()  or  array.include()    time complexity is O(n)
+
+  [i, ip, iph, ipho, iphone]
+
+  {
+    i:
+    ip:
+    iph:
+    iphone:
+  }
+
+  this is even more optimise
+  new map which is even more optimise than searching insight Object
+  new Map();
+
+
+
+
+
+
+
+
+# Live Chat on youtube
+
+  - Challenges :
+    - Get Data Live  # Data Layer(DL)
+    - Update the UI  # UI Layer(UL)
+
+  # Data (Live)
+    - Web Sockets : is a two way connection establish 
+                        (no reguler interval)
+                    {[UI => Server] or [Server => UI]}
+                    (it's kind of like a handshake between the server and UI)
+                    (once you have made that connection you can quickly send data from eigther side )
+                    ( so it's By Direction Live Data )
+                    ex. Trading Apps, WhatsApp, 
+    
+    - API(Long) Polling : 
+                            ( interval )
+                          (UI) <= (server)
+                          ex. Gmail, Cricbuzz
