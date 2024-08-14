@@ -43,7 +43,7 @@ const Sidebar = () => {
   // return !isMenuOpen ? null : (
 
   return (
-    <div className=' absolute top-20 z-20 p-3  bg-black text-white w-60 h-[85.6vh] overflow-hidden overflow-y-scroll '>
+    <div className=' absolute top-16 z-20 p-3  bg-black text-white w-60 h-[85.6vh] overflow-hidden overflow-y-scroll '>
       <ul className='cursor-pointer mb-4 font-semibold text-[14.4px]'>
         <li className=' py-[8px] rounded-xl hover:bg-[#252727]'><Link className='flex items-center' to="/"><img className='w-[26px] h-[26px] ml-3' src={home} alt="img"></img><p className='ml-5'>Home</p></Link></li>
         <li className='flex items-center py-[8px] rounded-xl hover:bg-[#252727]'><img className='w-[26px] h-[26px] ml-3' src={shorts} alt="img"></img><p className='ml-5'>Shorts</p></li>

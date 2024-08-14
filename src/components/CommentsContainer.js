@@ -104,11 +104,11 @@ const CommentsContainer = () => {
 //   };
 
   return (
-    <div className="w-[630px] border-2 border-white">
+    <div className=" border-2 border-white ">
       {/* <p className="font-bold text-2xl pt-5 pb-4">Comments</p> */}
       {/* <CommentsList comments={commentsData} /> */}
       {/* <Comment data={commentsData[0]} /> */}
-      <p className="font-bold text-2xl pt-5 pb-4">{feedBack.length} Comments</p>
+      <p className="font-bold text-2xl pt-5 pb-4 ">{feedBack.length} Comments</p>
             <Comment key={feedBack.index} data={feedBack}/>
     </div>
   );

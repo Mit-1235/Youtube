@@ -39,7 +39,7 @@ const ButtonList = () => {
     console.log(active);
 
   return (
-    <div className="flex py-3 no-scrollbar bg-black text-white overflow-hidden overflow-x-scroll border-2 border-red-600 ">
+    <div className="flex py-3 no-scrollbar bg-black text-white  overflow-hidden overflow-x-scroll border-2 border-red-600 ">
       {list.map((data, index) => (
         // <Button  key={index} name={data} />
         <button key={index}

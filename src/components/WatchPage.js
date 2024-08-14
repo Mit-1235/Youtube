@@ -79,8 +79,8 @@ const WatchPage = () => {
   // console.log(formattedDescription);
 
   return (
-    <div className="text-white col-span-12 flex items-center bg-black relative top-20">
-      <div className="col-span-6 pl-24">
+    <div className="grid grid-flow-col gap-2 text-white justify-items-center items-center bg-black relative top-20">
+      <div className="  grid-cols-6   ">
         {/* videoFrame */}
         <iframe
           className="rounded-xl"
@@ -95,7 +95,7 @@ const WatchPage = () => {
           allowFullScreen
         ></iframe>
         {/* video details */}
-        <div className="w-[630px] ">
+        <div className="w-[630px] px-6 lg:px-0">
           {/* title */}
           <div className="p-2   border-2 border-white text-white font-bold text-xl line-clamp-2">
             {singleVideo?.snippet?.localized?.title}
@@ -143,18 +143,21 @@ const WatchPage = () => {
             </div>
           </div>
           {/* video description */}
-          <div className="w-[630px] px-4 py-3 rounded-2xl bg-[#252727] border-2 border-white cursor-pointer ">
+          <div className="  px-4 py-3 rounded-2xl bg-[#252727] border-2 border-white cursor-pointer ">
             <p className="line-clamp-4 font-semibold text-sm"dangerouslySetInnerHTML={{ __html: formattedDescription }}></p>
           </div>
+          <div className="">
+            <CommentsContainer/>
+          </div>
         </div>
-        <div>
+        {/* <div className="">
           <CommentsContainer/>
-        </div>
+        </div> */}
       </div>
-      <div className="col-span-6">
-        {/* <iframe
+      <div className="grid-cols-5 hidden md:block">
+        <iframe
           className="rounded-xl"
-          width="640"
+          width="420"
           height="360"
           src={"https://www.youtube.com/embed/" + searchParams.get("v")}
           title="YouTube video player"
@@ -162,7 +165,7 @@ const WatchPage = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-        ></iframe> */}
+        ></iframe>
       </div>
     </div>
   );

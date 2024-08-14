@@ -259,7 +259,7 @@ const Head = () => {
 
   return (
     <>
-      <div className=" grid grid-flow-col grid-cols-3 sm:grid-cols-4  md:grid-cols-12  justify-items-center items-center text-white w-full h-20 z-10 fixed top-0 bg-black border-2 border-red-800">
+      <div className=" grid grid-flow-col grid-cols-3 sm:grid-cols-4  md:grid-cols-12  justify-items-center content-center items-center text-white w-full h-16 z-10 fixed top-0 bg-black border-2 border-red-800">
         {/* <div className="grid col-span-3 gap-3"> */}
           <div className=" grid grid-flow-col items-center   md:col-span-3  ">
           <div

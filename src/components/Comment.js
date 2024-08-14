@@ -8,9 +8,9 @@ const Comment = ({ data }) => {
 
 
   return (
-    <div>
+    <div className="">
       {data.map((item, index) => (
-        <div key={index} className="flex px-3 py-3">
+        <div key={index} className="flex px-3 py-3 ">
           <img className='w-12 h-12 rounded-full cursor-pointer' src={item?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl}></img>
             <div className='px-4'>
               <p className='font-bold text-sm cursor-pointer'>{item?.snippet?.topLevelComment?.snippet?.authorDisplayName}</p>
